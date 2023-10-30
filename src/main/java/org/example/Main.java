@@ -24,7 +24,7 @@ public class Main {
         int size = container.size();
         System.out.println("Размер контейнера: " + size);
 
-        //Добавления нового элемента и контейнера
+        //Вывод контейнера с новым элементом
         container.add(4);
         int newsize = container.size();
         System.out.print("Элементы контейнера с учетом нового элемента (размер контейнера снова " + newsize + "): ");
