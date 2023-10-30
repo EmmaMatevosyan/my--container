@@ -1,19 +1,77 @@
 package org.example;
 
-// Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
-// then press Enter. You can now see whitespace characters in your code.
-public class Main {
-    public static void main(String[] args) {
-        // Press Alt+Enter with your caret at the highlighted text to see how
-        // IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+public class Container<T> {
+    private Node<T> head;
+    private Node<T> tail;
+    private int size;
 
-        // Press Shift+F10 or click the green arrow button in the gutter to run the code.
-        for (int i = 1; i <= 5; i++) {
+    private static class Node<T> {
+        T data;
+        Node<T> next;
 
-            // Press Shift+F9 to start debugging your code. We have set one breakpoint
-            // for you, but you can always add more by pressing Ctrl+F8.
-            System.out.println("i = " + i);
+        Node(T data) {
+            this.data = data;
+            this.next = null;
         }
     }
+
+    public Container() {
+        head = null;
+        tail = null;
+        size = 0;
+    }
+
+    // Метод для добавления элемента в конец контейнера
+    public void add(T item) {
+        Node<T> newNode = new Node<>(item);
+        if (head == null) {
+            head = newNode;
+            tail = newNode;
+        } else {
+            tail.next = newNode;
+            tail = newNode;
+        }
+        size++;
+    }
+
+    // Метод для получения элемента по индексу
+    public T get(int index) {
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException("Индекс за пределами допустимого диапазона.");
+        }
+        Node<T> current = head;
+        for (int i = 0; i < index; i++) {
+            current = current.next;
+        }
+        return current.data;
+    }
+
+    // Метод для удаления элемента по индексу
+    public void remove(int index) {
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException("Индекс за пределами допустимого диапазона.");
+        }
+        if (index == 0) {
+            head = head.next;
+            if (head == null) {
+                tail = null;
+            }
+        } else {
+            Node<T> previous = head;
+            for (int i = 0; i < index - 1; i++) {
+                previous = previous.next;
+            }
+            previous.next = previous.next.next;
+            if (previous.next == null) {
+                tail = previous;
+            }
+        }
+        size--;
+    }
+
+    // Метод для получения размера контейнера
+    public int size() {
+        return size;
+    }
+
 }
